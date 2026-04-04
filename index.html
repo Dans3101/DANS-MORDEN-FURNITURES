@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elegant Furnish KE | Premium Interiors</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
@@ -11,8 +12,9 @@
         :root {
             --primary: #1a1a1a;
             --accent: #c5a059;
-            --brand-pink: #d80056; /* Matching the image color */
+            --brand-pink: #d80056; 
             --brand-gradient: linear-gradient(90deg, #d80056 0%, #a20041 100%);
+            --whatsapp-green: #25D366;
             --bg: #fafafa;
             --text: #333;
         }
@@ -23,19 +25,20 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            padding-bottom: 50px;
         }
 
-        /* --- NEW ICON NAVIGATION BAR (TOP) --- */
+        /* --- ICON NAVIGATION BAR (TOP) --- */
         .icon-nav {
             background: var(--brand-gradient);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 0;
             position: sticky;
             top: 0;
             z-index: 2000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .nav-item {
@@ -43,8 +46,11 @@
             text-decoration: none;
             text-align: center;
             flex: 1;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 600;
             transition: transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .nav-item i {
@@ -57,10 +63,10 @@
             transform: scale(1.1);
         }
 
-        /* --- REST OF STYLING --- */
+        /* --- HERO SECTION --- */
         .hero {
             position: relative;
-            height: 50vh;
+            height: 45vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -74,68 +80,116 @@
             font-family: 'Playfair Display', serif;
             font-size: 3rem;
             margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
+        .hero-content p {
+            font-weight: 300;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        /* --- PRODUCT GRID --- */
         .section-title {
             text-align: center;
-            margin: 40px 0 20px;
+            margin: 50px 0 30px;
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--brand-pink);
+            margin: 10px auto;
         }
 
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             padding: 0 5%;
             max-width: 1200px;
-            margin: 0 auto 50px;
+            margin: 0 auto 60px;
         }
 
         .card {
             background: #fff;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
         .card img {
             width: 100%;
-            height: 250px;
+            height: 280px;
             object-fit: cover;
         }
 
         .card-info {
-            padding: 15px;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-info h3 {
+            margin: 0 0 10px;
+            font-size: 1.25rem;
+            color: var(--primary);
         }
 
         .price {
             color: var(--brand-pink);
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
         }
 
-        .btn {
-            display: block;
-            background: var(--primary);
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--whatsapp-green);
             color: white;
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             text-decoration: none;
-            margin-top: 10px;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1eb956;
         }
 
         footer {
             background: #111;
-            color: #777;
+            color: #888;
             text-align: center;
-            padding: 30px;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Fixes */
+        @media (max-width: 600px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .products { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -154,7 +208,8 @@
         <i class="fa-solid fa-bag-shopping"></i>
         <span>Shop</span>
     </a>
-    <a href="https://wa.me/254713811622" class="nav-item"> <i class="fa-brands fa-whatsapp"></i>
+    <a href="https://wa.me/254700000000" target="_blank" class="nav-item">
+        <i class="fa-brands fa-whatsapp"></i>
         <span>Whatsapp</span>
     </a>
     <a href="#" class="nav-item">
@@ -166,22 +221,24 @@
 <div class="hero">
     <div class="hero-content">
         <h1>Elegant Furnish KE</h1>
-        <p>Premium Living. Tailored for You.</p>
+        <p>Premium Living. Tailored for the Kenyan Home.</p>
     </div>
 </div>
 
-<h2 class="section-title">Our Collection</h2>
+<h2 class="section-title">Featured Collections</h2>
 <div id="products" class="products">
     </div>
 
 <footer>
-    <p>&copy; 2026 Elegant Furnish KE</p>
+    <p>&copy; 2026 Elegant Furnish KE | Nairobi, Kenya</p>
+    <p style="font-size: 0.7rem; margin-top: 10px;">Exquisite furniture delivered to your doorstep.</p>
 </footer>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+    // Your Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyD2cXBfvOnLElwRHw0M5cEBX_Ug03fsyxE",
       authDomain: "dans-furnitures.firebaseapp.com",
@@ -196,36 +253,62 @@
     const db = getFirestore(app);
     const container = document.getElementById("products");
 
-    async function loadProducts() {
-        const querySnapshot = await getDocs(collection(db, "products"));
-        container.innerHTML = "";
+    // CONFIGURATION: Set your WhatsApp number here
+    const BUSINESS_PHONE = "254713811622"; 
 
-        if (querySnapshot.empty) {
-            renderFallback();
-        } else {
-            querySnapshot.forEach((doc) => renderCard(doc.data()));
+    async function loadProducts() {
+        try {
+            const querySnapshot = await getDocs(collection(db, "products"));
+            container.innerHTML = "";
+
+            if (querySnapshot.empty) {
+                renderFallbacks();
+            } else {
+                querySnapshot.forEach((doc) => {
+                    renderCard(doc.data());
+                });
+            }
+        } catch (error) {
+            console.error("Database error:", error);
+            renderFallbacks();
         }
     }
 
     function renderCard(item) {
+        const price = Number(item.price).toLocaleString();
+        
+        // WhatsApp Message Construction
+        const message = `Hello Elegant Furnish KE! I'd like to order:
+*Product:* ${item.name}
+*Price:* KSh ${price}
+Please let me know the delivery process.`;
+
+        const encodedMsg = encodeURIComponent(message);
+        const waLink = `https://wa.me/${BUSINESS_PHONE}?text=${encodedMsg}`;
+
         container.innerHTML += `
             <div class="card">
-                <img src="${item.image || 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500'}" />
+                <img src="${item.image || 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500'}" alt="${item.name}">
                 <div class="card-info">
-                    <h3>${item.name}</h3>
-                    <p class="price">KSh ${Number(item.price).toLocaleString()}</p>
-                    <a href="#" class="btn">Order via WhatsApp</a>
+                    <div>
+                        <h3>${item.name}</h3>
+                        <p class="price">KSh ${price}</p>
+                    </div>
+                    <a href="${waLink}" target="_blank" class="btn-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
+                    </a>
                 </div>
             </div>
         `;
     }
 
-    function renderFallback() {
-        const fallbacks = [
-            { name: "Luxury Sofa Set", price: "120000", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500" },
-            { name: "Executive Coffee Table", price: "25000", image: "https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500" }
+    function renderFallbacks() {
+        const items = [
+            { name: "Modern Velvet Sectional", price: "145000", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600" },
+            { name: "Scandinavian Dining Table", price: "68000", image: "https://images.unsplash.com/photo-1577143748517-0df92d47fd02?w=600" },
+            { name: "Luxury Accent Chair", price: "32500", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600" }
         ];
-        fallbacks.forEach(item => renderCard(item));
+        items.forEach(item => renderCard(item));
     }
 
     loadProducts();
