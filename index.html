@@ -3,82 +3,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Elegant Furnish KE</title><style>
-body{font-family:Arial;margin:0;background:#f5f5f5}
-nav{background:#000;color:#fff;padding:15px;text-align:center;font-size:20px}
-.hero{background:url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=60') center/cover;padding:80px;color:white;text-align:center}
-.hero h1{font-size:40px;margin:0}
-.hero p{font-size:18px}
-.container{padding:20px}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{background:#fff;padding:10px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.1);transition:0.3s}
-.card:hover{transform:scale(1.05)}
-.card img{width:100%;height:180px;object-fit:cover;border-radius:10px}
-.btn{background:black;color:white;padding:8px;border:none;margin-top:5px;cursor:pointer;border-radius:5px}
-.admin{background:#fff;padding:20px;margin-top:30px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
-input{width:100%;padding:10px;margin:8px 0;border-radius:5px;border:1px solid #ccc}
-.footer{text-align:center;padding:15px;background:#000;color:#fff;margin-top:20px}
-</style></head><body><nav>Elegant Furnish KE</nav><div class="hero">
-<h1>Modern Furniture for Your Home</h1>
-<p>Quality, Comfort & Style at Affordable Prices</p>
-</div><div class="container"><h2>Featured Products</h2>
-<div class="products"><div class="card">
-<img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=60">
-<h3>Luxury Sofa</h3>
-<p>KSh 45,000</p>
-</div><div class="card">
-<img src="https://images.unsplash.com/photo-1505691723518-36a5ac3b2d6c?auto=format&fit=crop&w=800&q=60">
-<h3>Dining Table</h3>
-<p>KSh 30,000</p>
-</div><div class="card">
-<img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=60">
-<h3>Office Chair</h3>
-<p>KSh 8,000</p>
-</div></div><h2 style="margin-top:40px">All Products</h2>
-<div id="products" class="products"></div><div class="admin">
-<h2>Admin Panel</h2>
-<input type="text" id="name" placeholder="Product Name">
-<input type="number" id="price" placeholder="Price">
-<input type="file" id="image">
-<button class="btn" onclick="addProduct()">Add Product</button>
-</div></div><div class="footer">© 2026 Elegant Furnish KE</div><script>
-let products = JSON.parse(localStorage.getItem("products")) || [];
+body{margin:0;font-family:Arial;background:#f5f5f5}
+nav{display:flex;justify-content:space-between;padding:15px;background:#000;color:#fff}
+.hero{background:url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=60') center/cover;padding:80px;text-align:center;color:white}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:20px}
+.card{background:#fff;padding:10px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+.card img{width:100%;height:180px;object-fit:cover}
+</style></head><body><nav>
+<h2>Elegant Furnish KE</h2>
+</nav><div class="hero">
+<h1>Modern Furniture</h1>
+<p>Quality Furniture for Your Home</p>
+</div><h2 style="text-align:center;margin-top:20px">Products</h2>
+<div id="products" class="products"></div><script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-function displayProducts(){
- let container = document.getElementById("products");
- container.innerHTML = "";
+const firebaseConfig = {
+  apiKey: "AIzaSyD2cXBfvOnLElwRHw0M5cEBX_Ug03fsyxE",
+  authDomain: "dans-furnitures.firebaseapp.com",
+  projectId: "dans-furnitures",
+  storageBucket: "dans-furnitures.firebasestorage.app",
+  messagingSenderId: "138747577982",
+  appId: "1:138747577982:web:973790879c284de7283a2f",
+  measurementId: "G-HB580YD1MM"
+};
 
- products.forEach(p => {
-  container.innerHTML += `
-  <div class="card">
-    <img src="${p.image}">
-    <h3>${p.name}</h3>
-    <p>KSh ${p.price}</p>
-  </div>`;
- });
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const container = document.getElementById("products");
+
+async function loadProducts() {
+  container.innerHTML = "";
+  const querySnapshot = await getDocs(collection(db, "products"));
+
+  querySnapshot.forEach((doc) => {
+    const item = doc.data();
+
+    container.innerHTML += `
+      <div class="card">
+        <img src="${item.image}" />
+        <h3>${item.name}</h3>
+        <p>KSh ${item.price}</p>
+      </div>
+    `;
+  });
 }
 
-function addProduct(){
- let name = document.getElementById("name").value;
- let price = document.getElementById("price").value;
- let file = document.getElementById("image").files[0];
-
- if(!file) return alert("Upload image");
-
- let reader = new FileReader();
- reader.onload = function(e){
-  let product = {
-    name:name,
-    price:price,
-    image:e.target.result
-  };
-
-  products.push(product);
-  localStorage.setItem("products", JSON.stringify(products));
-  displayProducts();
- };
- reader.readAsDataURL(file);
-}
-
-window.onload = displayProducts;
+loadProducts();
 </script></body>
 </html>
