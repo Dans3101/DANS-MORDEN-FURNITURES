@@ -1,172 +1,85 @@
 <!DOCTYPE html><html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Elegant Furnish Kenya</title><style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f5f5f5;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elegant Furnish KE</title><style>
+body{margin:0;font-family:Arial;background:#f5f5f5}
+nav{display:flex;justify-content:space-between;padding:15px;background:#fff;position:sticky;top:0;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+.hero{padding:80px;text-align:center;background:#ddd}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;padding:20px}
+.card{background:#fff;padding:10px;border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+.card img{width:100%;height:180px;object-fit:cover}
+.btn{display:inline-block;padding:8px 12px;background:black;color:#fff;text-decoration:none;margin-top:5px}
+.search{margin:20px;text-align:center}
+.cart{position:fixed;top:80px;right:10px;background:#fff;padding:10px;border:1px solid #ccc;width:250px}
+</style></head>
+<body><nav>
+<h2>Elegant Furnish KE</h2>
+<div>Cart: <span id="cartCount">0</span></div>
+</nav><div class="hero">
+<h2>Furniture Store</h2>
+<p>Order via WhatsApp or Cart</p>
+</div><div class="search">
+<input type="text" id="search" placeholder="Search products..." onkeyup="searchProduct()">
+</div><section id="products" class="products"></section><div class="cart" id="cartBox">
+<h3>Cart</h3>
+<div id="cartItems"></div>
+<button onclick="checkout()">Checkout (M-Pesa)</button>
+</div><script>
+const SHEET_ID = "PASTE_YOUR_SHEET_ID_HERE";
+const API = `https://opensheet.elk.sh/${SHEET_ID}/Sheet1`;
+let cart = [];
+
+function fixImage(url){
+ if(!url) return '';
+ if(url.includes('drive.google.com')){
+   let id = url.match(/[-\w]{25,}/);
+   return `https://drive.google.com/thumbnail?id=${id}`;
+ }
+ return url;
 }
 
-nav{
-  display:flex;
-  justify-content:space-between;
-  padding:15px;
-  background:white;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-nav h1{margin:0; font-size:20px;}
-nav a{margin:0 10px; text-decoration:none; color:black; font-weight:bold;}
-
-.hero{
-  text-align:center;
-  padding:90px 20px;
-  background:url('https://images.unsplash.com/photo-1505691938895-1758d7feb511') center/cover;
-  color:white;
-}
-
-.hero h2{font-size:42px; margin-bottom:10px;}
-.hero p{font-size:18px;}
-
-.btn{
-  padding:12px 18px;
-  background:black;
-  color:white;
-  border:none;
-  cursor:pointer;
-  border-radius:6px;
-  text-decoration:none;
-  display:inline-block;
-  margin-top:10px;
-}
-
-.section-title{
-  text-align:center;
-  font-size:28px;
-  margin:30px 0 10px;
-}
-
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-  gap:20px;
-  padding:30px;
-}
-
-.card{
-  background:white;
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  transition:0.3s;
-  padding-bottom:10px;
-}
-
-.card:hover{
-  transform:scale(1.04);
-}
-
-.card img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
-}
-
-.card h3{
-  margin:10px;
-}
-
-.card p{
-  margin:0 10px;
-  color:#333;
-}
-
-.contact{
-  text-align:center;
-  padding:40px;
-  background:white;
-  margin-top:20px;
-}
-
-.map{
-  width:100%;
-  height:300px;
-  border:0;
-  margin-top:15px;
-}
-
-.footer{
-  text-align:center;
-  padding:20px;
-  background:black;
-  color:white;
-  margin-top:20px;
-}
-
-.whatsapp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:green;
-  color:white;
-  padding:15px;
-  border-radius:50%;
-  font-size:20px;
-  text-decoration:none;
-}
-</style></head><body><nav>
-  <h1>Elegant Furnish KE</h1>
-  <div>
-    <a href="#">Home</a>
-    <a href="#products">Products</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav><section class="hero">
-  <h2>Premium Furniture in Kenya</h2>
-  <p>Modern, affordable and high-quality furniture delivered to your home.</p>
-  <a class="btn" href="#products">Shop Now</a>
-</section><h2 class="section-title">Our Products</h2><!-- PRODUCTS WILL LOAD FROM GOOGLE SHEETS --><section id="products" class="products"></section><script>
-// 👉 PUT YOUR GOOGLE SHEET ID HERE
-const SHEET_ID = "https://docs.google.com/spreadsheets/d/12a8_ahm02-owp8tKmAqbXiNZuwyE9lw7Fsxsjm5Q86k/edit?usp=drivesdk";
-
-const API_URL = `https://opensheet.elk.sh/${SHEET_ID}/Sheet1`;
-
-fetch(API_URL)
-.then(res => res.json())
-.then(data => {
-    const container = document.getElementById("products");
-
-    data.forEach(item => {
-        container.innerHTML += `
-        <div class="card">
-            <img src="${item.Image}" />
-            <h3>${item.Name}</h3>
-            <p>KSh ${item.Price}</p>
-            <a class="btn" href="https://wa.me/254713811622?text=${encodeURIComponent(item.WhatsApp)}">
-                Order on WhatsApp
-            </a>
-        </div>
-        `;
-    });
-})
-.catch(err => {
-    document.getElementById("products").innerHTML = "<p style='text-align:center;'>Failed to load products. Check Sheet setup.</p>";
+fetch(API)
+.then(res=>res.json())
+.then(data=>{
+ let container=document.getElementById('products');
+ data.forEach(item=>{
+  container.innerHTML+=`
+  <div class="card" data-name="${item.Name}">
+    <img src="${fixImage(item.Image)}">
+    <h3>${item.Name}</h3>
+    <p>KSh ${item.Price}</p>
+    <button class="btn" onclick="addToCart('${item.Name}',${item.Price})">Add to Cart</button>
+    <a class="btn" href="https://wa.me/254713811622?text=${item.Name}">WhatsApp</a>
+  </div>`;
+ });
 });
-</script><section id="contact" class="contact">
-  <h2>Visit Our Shop</h2>
-  <p>Nairobi, Kenya</p>
-  <p>Phone: +254 713 811 622</p>
-  <p>Email: musembidaniel615@gmail.com</p>  <iframe class="map"
-    src="https://maps.google.com/maps?q=Nairobi%20Kenya&output=embed">
-  </iframe>
-</section><div class="footer">
-  <p>© 2026 Elegant Furnish KE | All Rights Reserved</p>
-</div><a class="whatsapp" href="https://wa.me/254713811622" target="_blank">💬</a>
 
-</body>
+function addToCart(name,price){
+ cart.push({name,price});
+ document.getElementById('cartCount').innerText=cart.length;
+ displayCart();
+}
+
+function displayCart(){
+ let box=document.getElementById('cartItems');
+ box.innerHTML='';
+ cart.forEach(i=>{
+  box.innerHTML+=`<p>${i.name} - KSh ${i.price}</p>`;
+ });
+}
+
+function checkout(){
+ alert('M-Pesa payment: Send money to 0713811622');
+}
+
+function searchProduct(){
+ let input=document.getElementById('search').value.toLowerCase();
+ let cards=document.querySelectorAll('.card');
+ cards.forEach(c=>{
+  let name=c.getAttribute('data-name').toLowerCase();
+  c.style.display=name.includes(input)?'block':'none';
+ });
+}
+</script></body>
 </html>
