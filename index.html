@@ -18,42 +18,33 @@ nav{display:flex;justify-content:space-between;padding:15px;background:#fff;posi
 <div>Cart: <span id="cartCount">0</span></div>
 </nav><div class="hero">
 <h2>Furniture Store</h2>
-<p>Order via WhatsApp or Cart</p>
+<p>Quality furniture available now</p>
 </div><div class="search">
 <input type="text" id="search" placeholder="Search products..." onkeyup="searchProduct()">
-</div><section id="products" class="products"></section><div class="cart" id="cartBox">
+</div><section id="products" class="products"><div class="card" data-name="sofa">
+<img src="https://images.unsplash.com/photo-1582582429416-5b0f0c1b6c2c">
+<h3>Sofa Set</h3>
+<p>KSh 45000</p>
+<button class="btn" onclick="addToCart('Sofa Set',45000)">Add to Cart</button>
+<a class="btn" href="https://wa.me/254713811622?text=I want the Sofa Set">WhatsApp</a>
+</div><div class="card" data-name="dining">
+<img src="https://images.unsplash.com/photo-1616627451663-cc8f0f9c0c8c">
+<h3>Dining Table</h3>
+<p>KSh 30000</p>
+<button class="btn" onclick="addToCart('Dining Table',30000)">Add to Cart</button>
+<a class="btn" href="https://wa.me/254713811622?text=I want the Dining Table">WhatsApp</a>
+</div><div class="card" data-name="chair">
+<img src="https://images.unsplash.com/photo-1598300053653-9e5f9f8e6f65">
+<h3>Office Chair</h3>
+<p>KSh 8000</p>
+<button class="btn" onclick="addToCart('Office Chair',8000)">Add to Cart</button>
+<a class="btn" href="https://wa.me/254713811622?text=I want the Office Chair">WhatsApp</a>
+</div></section><div class="cart">
 <h3>Cart</h3>
 <div id="cartItems"></div>
 <button onclick="checkout()">Checkout (M-Pesa)</button>
 </div><script>
-const SHEET_ID = "PASTE_YOUR_SHEET_ID_HERE";
-const API = `https://opensheet.elk.sh/${SHEET_ID}/Sheet1`;
-let cart = [];
-
-function fixImage(url){
- if(!url) return '';
- if(url.includes('drive.google.com')){
-   let id = url.match(/[-\w]{25,}/);
-   return `https://drive.google.com/thumbnail?id=${id}`;
- }
- return url;
-}
-
-fetch(API)
-.then(res=>res.json())
-.then(data=>{
- let container=document.getElementById('products');
- data.forEach(item=>{
-  container.innerHTML+=`
-  <div class="card" data-name="${item.Name}">
-    <img src="${fixImage(item.Image)}">
-    <h3>${item.Name}</h3>
-    <p>KSh ${item.Price}</p>
-    <button class="btn" onclick="addToCart('${item.Name}',${item.Price})">Add to Cart</button>
-    <a class="btn" href="https://wa.me/254713811622?text=${item.Name}">WhatsApp</a>
-  </div>`;
- });
-});
+let cart=[];
 
 function addToCart(name,price){
  cart.push({name,price});
@@ -70,14 +61,14 @@ function displayCart(){
 }
 
 function checkout(){
- alert('M-Pesa payment: Send money to 0713811622');
+ alert('Pay via M-Pesa to 0713811622');
 }
 
 function searchProduct(){
  let input=document.getElementById('search').value.toLowerCase();
  let cards=document.querySelectorAll('.card');
  cards.forEach(c=>{
-  let name=c.getAttribute('data-name').toLowerCase();
+  let name=c.getAttribute('data-name');
   c.style.display=name.includes(input)?'block':'none';
  });
 }
