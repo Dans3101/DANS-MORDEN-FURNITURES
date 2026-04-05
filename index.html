@@ -3,170 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegant Furnish KE | Premium Interiors</title>
-    
+    <title>Elegant Furnish KE | Debug Mode</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
     <style>
-        :root {
-            --primary: #1a1a1a;
-            --accent: #c5a059;
-            --brand-pink: #d80056; 
-            --brand-gradient: linear-gradient(90deg, #d80056 0%, #a20041 100%);
-            --whatsapp-green: #25D366;
-            --bg: #fafafa;
-            --text: #333;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        /* --- ICON NAVIGATION BAR (TOP) --- */
-        .icon-nav {
-            background: var(--brand-gradient);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 12px 0;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .nav-item {
-            color: white;
-            text-decoration: none;
-            text-align: center;
-            flex: 1;
-            font-size: 0.7rem;
-            font-weight: 600;
-            transition: transform 0.2s;
-            text-transform: uppercase;
-        }
-
-        .nav-item i {
-            display: block;
-            font-size: 1.4rem;
-            margin-bottom: 4px;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 40vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80') center/cover;
-        }
-
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; }
-
-        /* --- PRODUCT GRID --- */
-        .section-title {
-            text-align: center;
-            margin: 40px 0 20px;
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-        }
-
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 0 5%;
-            max-width: 1200px;
-            margin: 0 auto 60px;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: 0.3s;
-            border: 1px solid #eee;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
-
-        .card img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            background: #f0f0f0;
-        }
-
-        .card-info { padding: 20px; flex-grow: 1; }
-
-        .price {
-            color: var(--brand-pink);
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-
-        .btn-whatsapp {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: var(--whatsapp-green);
-            color: white;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-
-        /* --- LOADING SPINNER --- */
-        #loader {
-            text-align: center;
-            padding: 50px;
-            font-size: 1.2rem;
-            color: var(--brand-pink);
-        }
-
-        footer {
-            background: #111;
-            color: #888;
-            text-align: center;
-            padding: 40px 20px;
-        }
+        :root { --primary: #1a1a1a; --brand-gradient: linear-gradient(90deg, #d80056 0%, #a20041 100%); --bg: #fafafa; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); }
+        .icon-nav { background: var(--brand-gradient); display: flex; justify-content: space-around; padding: 12px 0; position: sticky; top: 0; z-index: 2000; color: white; text-align: center; font-size: 0.7rem; }
+        .hero { height: 30vh; display: flex; align-items: center; justify-content: center; color: white; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80') center/cover; }
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #eee; padding: 15px; }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
+        #loader { text-align: center; padding: 40px; font-weight: bold; color: #d80056; }
     </style>
 </head>
 <body>
 
 <nav class="icon-nav">
-    <a href="#" class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-bag-shopping"></i><span>Shop</span></a>
-    <a href="https://wa.me/254713811622" target="_blank" class="nav-item"><i class="fa-brands fa-whatsapp"></i><span>Whatsapp</span></a>
-    <a href="#" class="nav-item"><i class="fa-solid fa-bars"></i><span>More</span></a>
+    <div><i class="fa-solid fa-house"></i><br>Home</div>
+    <div><i class="fa-solid fa-magnifying-glass"></i><br>Search</div>
+    <div><i class="fa-solid fa-bag-shopping"></i><br>Shop</div>
+    <div><i class="fa-brands fa-whatsapp"></i><br>Whatsapp</div>
 </nav>
 
-<div class="hero">
-    <h1>Elegant Furnish KE</h1>
-</div>
-
-<h2 class="section-title">Our Collection</h2>
-
-<div id="loader"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading Exquisite Pieces...</div>
+<div class="hero"><h1>Elegant Furnish KE</h1></div>
+<div id="loader">Connecting to Database...</div>
 <div id="products" class="products"></div>
-
-<footer>
-    <p>&copy; 2026 Elegant Furnish KE | Nairobi, Kenya</p>
-</footer>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -184,58 +46,46 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const container = document.getElementById("products");
-    const loader = document.getElementById("loader");
-
-    // Replace with your actual WhatsApp number
-    const PHONE_NUMBER = "254713811622"; 
 
     async function loadProducts() {
+        const loader = document.getElementById("loader");
+        const container = document.getElementById("products");
+
         try {
-            console.log("Attempting to connect to Firebase...");
+            // ALERT 1: Checking if connection starts
+            console.log("Starting fetch..."); 
+            
             const querySnapshot = await getDocs(collection(db, "products"));
             
-            console.log("Documents found in 'products' collection:", querySnapshot.size);
-            
             if (querySnapshot.empty) {
-                console.warn("Database is empty or collection name is wrong.");
-                loader.innerHTML = "No products found. Check collection name and Rules in Firebase.";
+                // ALERT 2: If collection exists but is empty
+                alert("DATABASE LOADED: But found 0 products. Check if your collection name is exactly 'products' (lowercase).");
+                loader.innerHTML = "No products found in Firebase.";
                 return;
             }
 
-            container.innerHTML = "";
             loader.style.display = "none";
-
             querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                renderCard(data);
+                const item = doc.data();
+                const price = item.price ? Number(item.price).toLocaleString() : "0";
+                const cleanImg = item.image ? item.image.replace(/['"]+/g, '').trim() : '';
+
+                container.innerHTML += `
+                    <div class="card">
+                        <img src="${cleanImg}" onerror="this.src='https://via.placeholder.com/300?text=Image+Error'">
+                        <h3>${item.name}</h3>
+                        <p style="color:#d80056; font-weight:bold">KSh ${price}</p>
+                    </div>
+                `;
             });
-        } catch (err) {
-            console.error("Firebase Error:", err);
-            loader.innerHTML = "Connection Error. Please check your Firebase Security Rules.";
+
+            alert("SUCCESS: Found " + querySnapshot.size + " items!");
+
+        } catch (error) {
+            // ALERT 3: If there is a permission or config error
+            alert("FIREBASE ERROR: " + error.message);
+            loader.innerHTML = "Error: " + error.message;
         }
-    }
-
-    function renderCard(item) {
-        // Clean URL to handle accidental quotes from Firebase
-        let imageUrl = item.image ? item.image.replace(/['"]+/g, '').trim() : '';
-        const price = Number(item.price).toLocaleString();
-        
-        const waMessage = encodeURIComponent(`Hello Elegant Furnish KE! I'd like to order:\n*Item:* ${item.name}\n*Price:* KSh ${price}`);
-        const waLink = `https://wa.me/${PHONE_NUMBER}?text=${waMessage}`;
-
-        container.innerHTML += `
-            <div class="card">
-                <img src="${imageUrl}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/500?text=Check+Image+URL'">
-                <div class="card-info">
-                    <h3>${item.name}</h3>
-                    <p class="price">KSh ${price}</p>
-                    <a href="${waLink}" target="_blank" class="btn-whatsapp">
-                        <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
-                    </a>
-                </div>
-            </div>
-        `;
     }
 
     loadProducts();
