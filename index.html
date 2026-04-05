@@ -104,7 +104,7 @@
             width: 100%;
             height: 280px;
             object-fit: cover;
-            background: #f0f0f0; /* Gray placeholder while loading */
+            background: #f0f0f0;
         }
 
         .card-info { padding: 20px; flex-grow: 1; }
@@ -192,46 +192,50 @@
 
     async function loadProducts() {
         try {
+            console.log("Attempting to connect to Firebase...");
             const querySnapshot = await getDocs(collection(db, "products"));
-            container.innerHTML = "";
-            loader.style.display = "none"; // Hide loader when data arrives
-
+            
+            console.log("Documents found in 'products' collection:", querySnapshot.size);
+            
             if (querySnapshot.empty) {
-                showPlaceholder();
+                console.warn("Database is empty or collection name is wrong.");
+                loader.innerHTML = "No products found. Check collection name and Rules in Firebase.";
                 return;
             }
 
+            container.innerHTML = "";
+            loader.style.display = "none";
+
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
-                
-                // DATA CLEANER: Removes quotes, spaces, or line breaks from your Firebase URL
-                let imageUrl = data.image ? data.image.replace(/['"]+/g, '').trim() : '';
-                
-                const price = Number(data.price).toLocaleString();
-                const waMessage = encodeURIComponent(`Hello! I'd like to order:\n*Item:* ${data.name}\n*Price:* KSh ${price}`);
-                const waLink = `https://wa.me/${PHONE_NUMBER}?text=${waMessage}`;
-
-                container.innerHTML += `
-                    <div class="card">
-                        <img src="${imageUrl}" alt="${data.name}" onerror="this.src='https://via.placeholder.com/500?text=Image+Not+Found'">
-                        <div class="card-info">
-                            <h3>${data.name}</h3>
-                            <p class="price">KSh ${price}</p>
-                            <a href="${waLink}" target="_blank" class="btn-whatsapp">
-                                <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                `;
+                renderCard(data);
             });
         } catch (err) {
-            console.error(err);
-            loader.innerHTML = "Error loading products. Please check database connection.";
+            console.error("Firebase Error:", err);
+            loader.innerHTML = "Connection Error. Please check your Firebase Security Rules.";
         }
     }
 
-    function showPlaceholder() {
-        container.innerHTML = `<p style="text-align:center; grid-column: 1/-1;">No products found in database.</p>`;
+    function renderCard(item) {
+        // Clean URL to handle accidental quotes from Firebase
+        let imageUrl = item.image ? item.image.replace(/['"]+/g, '').trim() : '';
+        const price = Number(item.price).toLocaleString();
+        
+        const waMessage = encodeURIComponent(`Hello Elegant Furnish KE! I'd like to order:\n*Item:* ${item.name}\n*Price:* KSh ${price}`);
+        const waLink = `https://wa.me/${PHONE_NUMBER}?text=${waMessage}`;
+
+        container.innerHTML += `
+            <div class="card">
+                <img src="${imageUrl}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/500?text=Check+Image+URL'">
+                <div class="card-info">
+                    <h3>${item.name}</h3>
+                    <p class="price">KSh ${price}</p>
+                    <a href="${waLink}" target="_blank" class="btn-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
+                    </a>
+                </div>
+            </div>
+        `;
     }
 
     loadProducts();
