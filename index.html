@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegant Furnish KE | Debug Mode</title>
+    <title>Elegant Furnish KE</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -14,7 +14,6 @@
         .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; }
         .card { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #eee; padding: 15px; }
         .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
-        #loader { text-align: center; padding: 40px; font-weight: bold; color: #d80056; }
     </style>
 </head>
 <body>
@@ -27,69 +26,63 @@
 </nav>
 
 <div class="hero"><h1>Elegant Furnish KE</h1></div>
-<div id="loader">Connecting to Database...</div>
-<div id="products" class="products"></div>
 
+<!-- ✅ STATIC IMAGES TEST -->
+<div id="products" class="products">
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775566262/super_3-column-image-carousel-lr_desktop_2_900x866_r4fy1b_usbebs.jpg">
+        <h3>Luxury Living Room Set</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775316026/image_1400x_5dbf7e46-3635-42c8-b4dd-7dd6d9292aaa_sc8qcp.jpg">
+        <h3>Modern Sofa</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775566262/sofas-sectional-c_hfaecj.webp">
+        <h3>Sectional Sofa</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775566263/cat31840094_yrzmug.jpg">
+        <h3>Comfort Lounge</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775316026/elegant-modern-sofa-side-table-interior-design_191095-91270_sxymgs.jpg">
+        <h3>Elegant Setup</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775316026/Image_5_hmzzjr.jpg">
+        <h3>Classic Interior</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775316026/Agyl-Homepage-Banner-4_rlaw6b.jpg">
+        <h3>Premium Furniture</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775316026/2676-LSECTA-Beckham-FA21_lcsgyk.webp">
+        <h3>Stylish Sofa</h3>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775316026/CTABlock_NewALxFH.png_u6n97t.png">
+        <h3>Modern Design</h3>
+    </div>
+
+</div>
+
+<!-- ❌ FIREBASE TEMPORARILY DISABLED -->
+<!--
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyD2cXBfvOnLElwRHw0M5cEBX_Ug03fsyxE",
-      authDomain: "dans-furnitures.firebaseapp.com",
-      projectId: "dans-furnitures",
-      storageBucket: "dans-furnitures.firebasestorage.app",
-      messagingSenderId: "138747577982",
-      appId: "1:138747577982:web:973790879c284de7283a2f",
-      measurementId: "G-HB580YD1MM"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    async function loadProducts() {
-        const loader = document.getElementById("loader");
-        const container = document.getElementById("products");
-
-        try {
-            // ALERT 1: Checking if connection starts
-            console.log("Starting fetch..."); 
-            
-            const querySnapshot = await getDocs(collection(db, "products"));
-            
-            if (querySnapshot.empty) {
-                // ALERT 2: If collection exists but is empty
-                alert("DATABASE LOADED: But found 0 products. Check if your collection name is exactly 'products' (lowercase).");
-                loader.innerHTML = "No products found in Firebase.";
-                return;
-            }
-
-            loader.style.display = "none";
-            querySnapshot.forEach((doc) => {
-                const item = doc.data();
-                const price = item.price ? Number(item.price).toLocaleString() : "0";
-                const cleanImg = item.image ? item.image.replace(/['"]+/g, '').trim() : '';
-
-                container.innerHTML += `
-                    <div class="card">
-                        <img src="${cleanImg}" onerror="this.src='https://via.placeholder.com/300?text=Image+Error'">
-                        <h3>${item.name}</h3>
-                        <p style="color:#d80056; font-weight:bold">KSh ${price}</p>
-                    </div>
-                `;
-            });
-
-            alert("SUCCESS: Found " + querySnapshot.size + " items!");
-
-        } catch (error) {
-            // ALERT 3: If there is a permission or config error
-            alert("FIREBASE ERROR: " + error.message);
-            loader.innerHTML = "Error: " + error.message;
-        }
-    }
-
-    loadProducts();
-<img src="https://res.cloudinary.com/dd3rguuth/image/upload/v1775316026/image_1400x_5dbf7e46-3635-42c8-b4dd-7dd6d9292aaa_sc8qcp.jpg">
+   your firebase code here
 </script>
+-->
+
 </body>
 </html>
